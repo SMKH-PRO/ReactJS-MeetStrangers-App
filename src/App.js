@@ -40,14 +40,7 @@ const location = createBrowserHistory().location
 
 
 
-const config = {
-  apiKey: "AIzaSyDap2PlQsFky5YnQRhyMqsWENasn_hJUiU",
-  authDomain: "saylani-7b489.firebaseapp.com",
-  databaseURL: "https://saylani-7b489.firebaseio.com",
-  projectId: "saylani-7b489",
-  storageBucket: "saylani-7b489.appspot.com",
-  messagingSenderId: "349400059211"
-};
+
 
 if (!firebase.apps.length) {
   firebase.initializeApp(config);
