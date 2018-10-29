@@ -1,32 +1,81 @@
-.App {
-  text-align: center;
+.center-div
+{
+  position: absolute ;
+  margin: auto;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 300px;
+  height: 300px;
+  border-radius: 3px;
+
+
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
+.Loading{
+  display: block;
+  margin: 0 auto;
+  border-color: red
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+
+
+.wrapper{
+ position: relative;
+
+}
+.buttonClassname{
+
+
+}
+.buttonProgress{
+
+
+  color: #00a500;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -12px;
+  margin-left: -12px;
+  
+ 
+}
+
+
+
+.buttonSuccess {
+  background-color: #00a500
+ }
+
+ .buttonSuccess:hover {
+  background-color: #00a800
+ }
+
+ .CenteredDiv{
+  height: auto; /* Magic here */
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
+  align-items: center;
+ }
 
-.App-link {
-  color: #61dafb;
-}
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+
+ .CenterParent {
+  position: relative;
+}
+.CenterChild {
+    text-align: -webkit-center;
+    width:100%;
+    max-width: auto;
+    background: white;
+  
+min-width: 250px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 5%);
+padding-top: 15px;
+padding-bottom: 40px;
+  border-radius: 10px;
 }
