@@ -26,21 +26,32 @@ import Home from './Screens/Pages/Home.js';
 import Profile from './Screens/Pages/Profile.js';
 import createBrowserHistory from 'history/createBrowserHistory'
 import Notfound from './Screens/Pages/404'
+import Testing from './Screens/Pages/ss'
+import Avatar from '@material-ui/core/Avatar';
 
 import {
 Router,
   Route,
-   Redirect,
+  Redirect,
     Link,
     Switch
 } from 'react-router-dom';
+import ProfileRedirect from './Screens/Helpers/RedirectToProfile'
+
 
 const History = createBrowserHistory();
 const location = createBrowserHistory().location
 
 
 
-
+const config = {
+  apiKey: "AIzaSyDap2PlQsFky5YnQRhyMqsWENasn_hJUiU",
+  authDomain: "saylani-7b489.firebaseapp.com",
+  databaseURL: "https://saylani-7b489.firebaseio.com",
+  projectId: "saylani-7b489",
+  storageBucket: "saylani-7b489.appspot.com",
+  messagingSenderId: "349400059211"
+};
 
 if (!firebase.apps.length) {
   firebase.initializeApp(config);
@@ -122,12 +133,12 @@ class PersistentDrawerLeft extends React.Component {
     toastdisplay:false,
     vertical: 'bottom',
     horizontal: 'right',
-    toastmsg:''
+    toastmsg:'',
+    ProfileIncomplete: false,
+    user:{}
  
     }
     this.logout = this.logout.bind(this)
-    this.login = this.login.bind(this)
-
 
   }
   
@@ -141,39 +152,6 @@ class PersistentDrawerLeft extends React.Component {
 
 
   
-  
-  
-    login(){
-  
-  
-      this.setState({loading:true,ErrorMessage:''})
-      let facebooklogin = new firebase.auth.FacebookAuthProvider();
-    
-    
-      firebase.auth().signInWithPopup(facebooklogin).then(result=> {
-        // This gives you a Facebook Access Token. You can use it to access the Facebook API.
-        let token = result.credential.accessToken;
-        // The signed-in user info.
-        let user = result.user;
-
-
-    
-      this.setState({loggedIn:true,loading:false,success:true,ErrorMessage:`Logged In As ${user.displayName}`,toastdisplay:true,toastmsg:`Logged In As '' ${user.displayName} ''`})
-        // ...
-      }).catch((error)=> {
-        // Handle Errors here.
-        let errorCode = error.code;
-        let errorMessage = error.message;
-        // The email of the user's account used.
-        let email = error.email;
-        // The firebase.auth.AuthCredential type that was used.
-        let credential = error.credential;
-    
-        this.setState({loggedIn:false,loading:false,success:false,ErrorMessage: `Error: ${errorMessage}`})
-    
-        // ...
-      });
-    }
 
 
 
@@ -186,9 +164,7 @@ componentDidMount(){
        History.listen((location, action) => {
         this.setState({currentPath: location.pathname !== "/" ? location.pathname.replace(/\//g, " > ") : location.pathname.replace(/\//g, "") })
         
-        
-
-      });
+           });
 
 
 
@@ -202,9 +178,32 @@ checkifloggedin(){
     if (user) {
       // User is signed in.
       
+this.setState({user:user})
+firebase.database().ref(`MeetIn/USERS/${user.uid}`).on('value',(RecievedData)=>{
+const data = RecievedData
+
+
+
+  if(( data.hasChild("Duration1") &&  data.hasChild("Duration2") &&  data.hasChild("Duration3") ) && ( data.hasChild("Time1") &&  data.hasChild("Time2") &&  data.hasChild("Time3")  && data.hasChild("Time4") ) && ( data.hasChild("Juice") &&  data.hasChild("Coffee") &&  data.hasChild("Cocktail") ) && data.hasChild("Phone")  && data.hasChild("Name")  && data.hasChild("img1") && data.hasChild("img2")  && data.hasChild("img3")   && data.hasChild("lat") && data.hasChild("lng")){
+
+    
+    console.log("Profile Is Complete")
+    this.setState({ProfileIncomplete:false})
+  }
+else{
+  console.log("Profile Is In-Complete")
+
+
+  if(location.pathname !== "/Profile"){ //Make sure that user is not already on profile page!
+  this.setState({ProfileIncomplete:true})} //Agar koi aik bhe cheez data se missing ha  to profile par redirect kardo
+}
+
+
+})
+
    // console.log(user)
-    this.setState({loggedIn: true})
-console.log(user)
+    this.setState({loggedIn: true});
+//console.log(user)
       // ...
     } else {
       // User is signed out.
@@ -242,7 +241,7 @@ handleCloseToast = () => {
 
   render() {
     const { classes, theme, } = this.props;
-    const { open,loggedIn,currentPath, toastdisplay, toastmsg,vertical,horizontal} = this.state;
+    const { open,loggedIn,currentPath, toastdisplay, toastmsg,vertical,horizontal,ProfileIncomplete,user} = this.state;
 
 
 
@@ -256,7 +255,6 @@ console.log("CurrentPath:: ",currentPath,",, PathName: ",location.pathname)
       <Router history={History}>
 
       <div className={classes.root}>
-
               <Snackbar
           anchorOrigin={{ vertical, horizontal }}
           open={toastdisplay}
@@ -305,6 +303,17 @@ console.log("CurrentPath:: ",currentPath,",, PathName: ",location.pathname)
               {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
             </IconButton>
           </div>
+
+                <div style={{ width: "100%", height: "200px" /*backgroundImage: `url(${img})`*/, backgroundRepeat: 'no-repeat', backgroundSize: "cover" }}>
+          {user && <span>
+            <Avatar src={user.photoURL} className={classes.avatar} alt="Profile Picture" />
+            <br />
+            <br />
+            <br />
+            <Typography className={classes.drawerText} variant='overline'>{user.displayName}</Typography>
+            <Typography className={classes.drawerText} variant='body2'>{user.email}</Typography>
+          </span>}
+        </div>
           <Divider />
           <List>
           <Link  to={`/`}>   
@@ -340,7 +349,7 @@ console.log("CurrentPath:: ",currentPath,",, PathName: ",location.pathname)
 
 
              
-                <ListItem onClick={this.login} button >
+                <ListItem onClick={()=>{this.setState({open:false})}} button >
                   <ListItemIcon> <LoginIcon /></ListItemIcon>
                   <ListItemText   primary={"Login"} />
                 </ListItem>
@@ -360,11 +369,13 @@ console.log("CurrentPath:: ",currentPath,",, PathName: ",location.pathname)
 
 <div  >
 
+     
 
 <Switch>
         <Route exact path="/Profile" component={loggedIn ?  Profile:Login}/>  
-        <Route  exact path="/" component={loggedIn ?  Home:Login}/>   
+        <Route  exact path="/" component={loggedIn ?  ProfileIncomplete? ProfileRedirect:Home :Login}/>   
 
+             {/* <Route component={Testing} /> */}
 
              <Route component={Notfound} />
  

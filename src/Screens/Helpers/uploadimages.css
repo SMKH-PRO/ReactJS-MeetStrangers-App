@@ -199,8 +199,21 @@ input, textarea, select, button, meter, progress {
 
 .widthsetting{ 
 
-    max-width:150px;
+    max-width:inherit;
     display: inline-block;
     margin: 10px;
 
+}
+
+.overide{
+    display: block;
+    margin: 0 auto;
+    border-color: red;
+ 
+}
+
+.threeimg{
+
+    max-height: 150px;
+    height: 150px;
 }
