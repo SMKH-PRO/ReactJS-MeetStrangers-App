@@ -409,6 +409,15 @@ if(step1 && step2 && step3 && step4 !== true){
 }
 
 
+
+    ///IF ALL OF THE STEPS ARE COMPLETED, JUST CHANGE CURRENTLY ACTIVE STEP to Last Step 
+
+    if(( data.hasChild("Duration1") &&  data.hasChild("Duration2") &&  data.hasChild("Duration3") ) && ( data.hasChild("Time1") &&  data.hasChild("Time2") &&  data.hasChild("Time3")  && data.hasChild("Time4") ) && ( data.hasChild("Juice") &&  data.hasChild("Coffee") &&  data.hasChild("Cocktail") ) && data.hasChild("Phone")  && data.hasChild("Name")  && data.hasChild("img1") && data.hasChild("img2")  && data.hasChild("img3")   && data.hasChild("lat") && data.hasChild("lng")){
+
+      this.setState({activeStep:4})
+    }
+
+
       }).then(()=>{this.setState({MainLoading:false,LoadNext:false,LoadNextSmall:false})})  //Firebase se data calling hogae :) now remove loading 
 
 
@@ -506,12 +515,6 @@ this.setState({CompletedSmallSteps:{0:false,1:false,2:false},SmallStepsCompleted
 
 
 
-    ///IF ALL OF THE STEPS ARE COMPLETED, JUST CHANGE CURRENTLY ACTIVE STEP
-
-    if(( data.hasChild("Duration1") &&  data.hasChild("Duration2") &&  data.hasChild("Duration3") ) && ( data.hasChild("Time1") &&  data.hasChild("Time2") &&  data.hasChild("Time3")  && data.hasChild("Time4") ) && ( data.hasChild("Juice") &&  data.hasChild("Coffee") &&  data.hasChild("Cocktail") ) && data.hasChild("Phone")  && data.hasChild("Name")  && data.hasChild("img1") && data.hasChild("img2")  && data.hasChild("img3")   && data.hasChild("lat") && data.hasChild("lng")){
-
-      this.setState({activeStep:4})
-    }
 
 
 

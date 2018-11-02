@@ -135,7 +135,8 @@ class PersistentDrawerLeft extends React.Component {
     horizontal: 'right',
     toastmsg:'',
     ProfileIncomplete: false,
-    user:{}
+    user:{},
+    coverimg:'http://wall2born.com/data/out/608/image-43392205-material-wallpaper.jpg',
  
     }
     this.logout = this.logout.bind(this)
@@ -241,7 +242,7 @@ handleCloseToast = () => {
 
   render() {
     const { classes, theme, } = this.props;
-    const { open,loggedIn,currentPath, toastdisplay, toastmsg,vertical,horizontal,ProfileIncomplete,user} = this.state;
+    const { open,loggedIn,currentPath, toastdisplay, toastmsg,vertical,horizontal,ProfileIncomplete,user,coverimg} = this.state;
 
 
 
@@ -298,22 +299,26 @@ console.log("CurrentPath:: ",currentPath,",, PathName: ",location.pathname)
             paper: classes.drawerPaper,
           }}
         >
-          <div className={classes.drawerHeader}>
-            <IconButton onClick={this.handleDrawerClose}>
+
+
+<div >
+<div style={{ width: "100%", height: "200px" ,backgroundImage: `url(${coverimg})`, backgroundRepeat: 'no-repeat', backgroundSize: "cover" }}>
+
+<IconButton onClick={this.handleDrawerClose}>
               {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
             </IconButton>
-          </div>
-
-                <div style={{ width: "100%", height: "200px" /*backgroundImage: `url(${img})`*/, backgroundRepeat: 'no-repeat', backgroundSize: "cover" }}>
           {user && <span>
             <Avatar src={user.photoURL} className={classes.avatar} alt="Profile Picture" />
-            <br />
-            <br />
-            <br />
+        
             <Typography className={classes.drawerText} variant='overline'>{user.displayName}</Typography>
             <Typography className={classes.drawerText} variant='body2'>{user.email}</Typography>
           </span>}
         </div>
+          
+
+          </div>
+
+          
           <Divider />
           <List>
           <Link  to={`/`}>   
