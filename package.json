@@ -15,7 +15,9 @@
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.0.5",
     "react-spinners": "^0.4.7",
-    "sweetalert": "^2.1.2"
+    "sweetalert": "^2.1.2",
+    "homepage": "https://myapp.com/directory-name"
+
   },
   "scripts": {
     "start": "react-scripts start",
