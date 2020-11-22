@@ -139,7 +139,7 @@ class login extends Component {
                 disabled={loading}
                 onClick={this.login}
               >
-                Easy And Fast Login With Facebook
+                Login With Facebook
               </Button>
               {loading && <CircularProgress size={24} className={"buttonProgress"} />}
             </div>
