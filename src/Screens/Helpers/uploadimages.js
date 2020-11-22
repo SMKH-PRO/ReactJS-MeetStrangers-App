@@ -149,8 +149,7 @@ filedata.append('file',file);
 
 
     axios({
-        
-        url: '//reactsocial.mutualfilesharing.com/UploadedFiles/upload.php',
+        url: 'https://cors-anywhere.herokuapp.com/reactsocial.mutualfilesharing.com/UploadedFiles/upload.php',
         method:'POST',
         headers:{'Content-Type':'application/x-www-form-urlencoded'},
         data: filedata
